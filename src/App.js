@@ -1,26 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  NavbarText
+} from 'reactstrap'
+import './App.css'
+import About from './pages/About'
+import Portfolio from './pages/Portfolio'
+import Contact from './pages/Contact'
 
-function App() {
+const App = () => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const toggle = () => setIsOpen(!isOpen)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <div>
+        <Navbar color='light' light expand='md'>
+          <NavbarBrand>Main Page</NavbarBrand>
+          <NavbarToggler onClick={toggle} />
+          <Collapse isOpen={isOpen} navbar>
+            <Nav className='mr-auto' navbar>
+              <NavItem>
+                <NavLink><Link className='link' to='/'>About</Link></NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink><Link className='link' to='/portfolio'>Portfolio</Link></NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink><Link className='link' to='/contact'>Contact</Link></NavLink>
+              </NavItem>
+            </Nav>
+          </Collapse>
+        </Navbar>
+        <Switch>
+          <Route exact path='/' component={About} />
+          <Route path='/portfolio' component={Portfolio} />
+          <Route path='/contact' component={Contact} />
+        </Switch>
+      </div>
+    </Router>
+  )
 }
 
-export default App;
+export default App
